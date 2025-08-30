@@ -1,0 +1,16 @@
+Stack Memory:
+
+Stores local variables and reference variables (i.e., memory addresses of objects).
+The stack is automatically managed (data is pushed and popped as functions are called and returned).
+Limited size, can lead to stack overflow if too much memory is used (e.g., excessive recursion).
+Heap Memory:
+
+Stores objects and class-level (non-local) variables.
+Memory in the heap is managed by the Garbage Collector in Java, which automatically frees up memory no longer referenced by any part of the program.
+Larger in size than the stack, but slower to access due to the dynamic memory allocation and garbage collection overhead.
+Summary:
+Primitive types are stored on the stack when they are local to a method, but if they are part of an object, they are stored in the heap along with the object.
+Reference variables (pointers to objects) are stored in the stack, but the objects themselves are stored in the heap.
+
+//The stack is used for storing local variables and function call-related data (such as function parameters, return addresses,
+// and local variables).
