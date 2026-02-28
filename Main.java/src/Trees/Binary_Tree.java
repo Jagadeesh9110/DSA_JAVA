@@ -220,6 +220,131 @@ public class Binary_Tree {
 
         return isValidBinarySearchTree(node.left,min,node.val) && isValidBinarySearchTree(node.right,node.val,max);
     }
+    public boolean pathSum(int target){
+        return hasPathSum(root,target);
+    }
+    private boolean hasPathSum(Node node,int rem){
+        if(node==null){
+            return false;
+        }
+        if(node.left==null && node.right==null){
+             return rem==node.val;
+        }
+        return hasPathSum(node.left,rem-node.val) || hasPathSum(node.right,rem-node.val);
+
+    }
+
+    public List<List<Integer>> pathSum(Node root, int targetSum) {
+         List<List<Integer>> res=new ArrayList<>();
+        return res;
+    }
+    private void pathSum(Node node,int rem,List<Integer> cur,List<List<Integer>> res){
+        if(node==null){
+            return;
+        }
+        cur.add(node.val);
+        if(node.left==null && node.right==null && rem==0) {
+            res.add(new ArrayList<>(cur));
+        }else{
+            pathSum(node.left,rem-node.val,cur,res);
+            pathSum(node.right,rem-node.val,cur,res);
+        }
+        cur.remove(cur.size()-1);
+    }
+
+    public Node lowestCommonAncestor(Node p,Node q){
+        return lowestCommonAncestor(root,p,q);
+    }
+    private boolean hasNode(Node root,Node node){
+        if(root==null){
+            return false;
+        }
+        if(root==node){
+            return true;
+        }
+        return hasNode(root.left,node) || hasNode(root.right,node);
+    }
+    private Node lowestCommonAncestor(Node root,Node p,Node q){
+        if(root==null || p==null || q== null){
+            return null;
+        }
+        // this will give O(n^2) time complexity.
+        // this are checking if one node is present on left and another one is right
+//        if(hasNode(root.left,p) && hasNode(root.right,q)){
+//            return root;
+//        }
+//        if(hasNode(root.left,q) && hasNode(root.right,p)){
+//            return root;
+//        }
+//        Node left=lowestCommonAncestor(root.left,p,q);
+//        Node right=lowestCommonAncestor(root.right,p,q);
+
+        // O(n) time and space approach.
+//        List<Node> path1=new ArrayList<>();
+//        List<Node> path2=new ArrayList<>();
+//
+//        if(!findPath(root,path1,p) || !findPath(root,path2,q)){
+//            return null;
+//        }
+//        Node lca=null;
+//        int i=0;
+//        while(i<path1.size() && i<path2.size()){
+//            if(path1.get(i)==path2.get(i)){
+//                lca=path1.get(i);
+//            }else{
+//                break;
+//            }
+//            i++;
+//        }
+//        return lca;
+
+        // O(n) time and O(h) space, where h is height of the subtree.
+        if(root==p || root==q){
+            return root;
+        }
+        Node left = lowestCommonAncestor(root.left, p, q);
+        Node right = lowestCommonAncestor(root.right, p, q);
+        if(left!=null && right!=null){
+            return root;
+        }
+
+         if(left!=null){
+             return left;
+         }
+         return right;
+    }
+    private boolean findPath(Node root,List<Node> path,Node n){
+       if(root==null){
+           return false;
+       }
+       path.add(root);
+       if(root==n || findPath(root.left,path,n) || findPath(root.right,path,n)){
+          return true;
+       }
+        path.remove(path.size() - 1);
+       return false;
+    }
+
+
+//    public int maxPathSum(){
+//        List<List<Integer>> allPaths=new ArrayList<>();
+//        maxPathSum(root,new ArrayList<>(),allPaths);
+//        int max=Integer.MIN_VALUE;
+//        int n=allPaths.size();
+//        for(int i=0;i<n;i++){
+//            int sum=0;
+//            for(int val:allPaths.get(i)){
+//                sum+=val;
+//            }
+//            max=Math.max(max,sum);
+//        }
+//        return max;
+//    }
+//    private void maxPathSum(Node node,List<Integer> cur,List<List<Integer>> allPaths){
+//         if(node==null){
+//             return
+//         }
+//    }
 
     public static void main(String[] args) {
           Scanner in=new Scanner(System.in);
